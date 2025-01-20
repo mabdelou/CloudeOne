@@ -1,6 +1,7 @@
-**ansible
-./ansible/template/**
-./ansible/vault/**
+
+build/ansible/template/*
+build/ansible/vault/*
 **.env
 **.crt
 **.key
+
