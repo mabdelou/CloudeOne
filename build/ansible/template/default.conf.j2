@@ -1,0 +1,22 @@
+server {
+        listen *:"{{ domain_protocol }}" ssl;
+        listen [::]:"{{ domain_protocol }}" ssl;
+	
+	root /var/www/html;
+        index index.php index.html index.htm;
+
+        ssl_certificate /etc/nginx/conf.d/server.crt;
+        ssl_certificate_key /etc/nginx/conf.d/server.key;
+                
+	location ~ \.php$ {
+        	fastcgi_pass "{{ wordpress_host }}":"{{ wordpress_port }}";
+        	include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        	fastcgi_param PATH_INFO $fastcgi_path_info;
+	}
+
+        location ~ /\.ht {
+               deny all;
+        }
+}
+

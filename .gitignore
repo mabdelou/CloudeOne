@@ -1,5 +1,5 @@
 
-build/ansible/template/*
+# build/ansible/template/*
 build/ansible/vault/*
 **.env
 **.crt

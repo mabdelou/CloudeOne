@@ -1,0 +1,90 @@
+- name: Deploy WordPress Stack
+  hosts: wordpress_server
+  become: yes
+  vars_files:
+    - ../template/main.yml
+
+  pre_tasks:
+    - name: Update apt cache
+      apt:
+        update_cache: yes
+        cache_valid_time: 3600
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name:
+          - docker.io
+          - docker-compose
+          - python3-pip
+          - git
+        state: present
+
+    - name: Install Docker Python module
+      pip:
+        name: docker
+        state: present
+
+    - name: Create project directory
+      file:
+        path: "{{ project_dir }}"
+        state: directory
+        mode: '0755'
+
+    - name: Copy Docker Compose file
+      template:
+        src: ../../compose/templates/docker-compose.yml.j2
+        dest: "{{ project_dir }}/docker-compose.yml"
+        mode: '0644'
+
+    - name: Create directories for services
+      file:
+        path: "{{ project_dir }}/{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - build/nginx/confs
+        - build/wordpress
+        - build/mysql
+        - build/phpmyadmin
+    
+    - name: Install SSL certificate
+      copy:
+        content: "{{ ssl_certificate }}"
+        dest: "{{ project_dir }}/build/nginx/confs/server.crt"
+        mode: '0644'
+      no_log: true
+
+    - name: Install SSL private key
+      copy:
+        content: "{{ ssl_private_key }}"
+        dest: "{{ project_dir }}/build/nginx/confs/server.key"
+        mode: '0600'
+      no_log: true
+    
+    - name: Copy nginx configuration files
+      template:
+        src: "templates/{{ item.src }}"
+        dest: "{{ project_dir }}/build/nginx/confs/{{ item.dest }}"
+        mode: '0600'
+      loop:
+        - { src: default.conf.j2, dest: default.conf }
+        - { src: nginx.conf.j2, dest: nginx.conf" }
+
+    - name: Copy environment files
+      template:
+        src: "templates/{{ item.src }}"
+        dest: "{{ project_dir }}/build/{{ item.dest }}"
+        mode: '0600'
+      loop:
+        - { src: mysql.env.j2, dest: mysql/.env }
+        - { src: wordpress.env.j2, dest: wordpress/.env }
+        - { src: nginx.env.j2, dest: nginx/.env }
+        - { src: phpmyadmin.env.j2, dest: phpmyadmin/.env }
+
+    - name: Start Docker services
+      docker_compose:
+        project_src: "{{ project_dir }}"
+        state: present
+        pull: yes
+        remove_orphans: yes

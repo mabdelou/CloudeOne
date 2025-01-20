@@ -1,0 +1,20 @@
+project_dir: /start
+
+domain_name: CloudOne.dev
+domain_protocol: 443
+
+mysql_host: "{{ MYSQL_HOST }}"
+mysql_root_password: "{{ MYSQL_ROOT_PASSWORD }}"
+mysql_database: "{{ MYSQL_DATABASE }}"
+mysql_user: "{{ MYSQL_USER }}"
+mysql_password: "{{ MYSQL_PASSWORD }}"
+
+wordpress_host: wordpress
+wordpress_port: 9000
+wordpress_db_host: "{{ WORDPRESS_DB_HOST }}"
+wordpress_db_name: "{{ MYSQL_DATABASE }}"
+wordpress_db_user: "{{ MYSQL_USER }}"
+wordpress_db_password: "{{ MYSQL_PASSWORD }}"
+
+ssl_certificate: "{{ ssl_certificate }}"
+ssl_private_key: "{{ ssl_private_key }}"
