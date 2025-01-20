@@ -4,4 +4,4 @@ build/ansible/vault/*
 **.env
 **.crt
 **.key
-
+.vagrant
