@@ -104,7 +104,7 @@
         mode: '0600'
       loop:
         - { src: default.conf.j2, dest: default.conf }
-        - { src: nginx.conf.j2, dest: nginx.conf" }
+        - { src: nginx.conf.j2, dest: nginx.conf }
 
     - name: Copy environment files
       template:
