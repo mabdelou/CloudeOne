@@ -2,7 +2,8 @@
   hosts: wordpress_server
   become: yes
   vars_files:
-    - ../template/main.yml
+    - ../template/main.yaml
+    - ../vault/vault.yaml
 
   pre_tasks:
     - name: Update apt cache
@@ -19,28 +20,56 @@
           - python3-pip
           - git
         state: present
+ 
+    - name: Upgrade pip to the latest version
+      command: python3 -m pip install --upgrade pip
+        
+    # - name: add docker group
+    #   command: sudo groupadd docker
 
+    - name: Upgrade pip to the latest version
+      command: sudo usermod -aG docker $USER
+      
+    # - name: activate the changes to groups
+    #   command: newgrp docker
+
+    - name: Install setuptools_rust for bcrypt
+      pip:
+        name: setuptools_rust
+        state: present
+          
     - name: Install Docker Python module
       pip:
         name: docker
+        state: present
+
+    - name: Install Docker-Compose Python module
+      pip:
+        name: docker-compose
         state: present
 
     - name: Create project directory
       file:
         path: "{{ project_dir }}"
         state: directory
+        owner: vagrant
+        group: vagrant
         mode: '0755'
 
     - name: Copy Docker Compose file
       template:
-        src: ../templates/docker-compose.yml.j2
+        src: ../template/docker-compose.yml.j2
         dest: "{{ project_dir }}/docker-compose.yml"
+        owner: vagrant
+        group: vagrant
         mode: '0644'
 
     - name: Create directories for services
       file:
         path: "{{ project_dir }}/{{ item }}"
         state: directory
+        owner: vagrant
+        group: vagrant
         mode: '0755'
       loop:
         - build/nginx/confs
@@ -52,6 +81,8 @@
       copy:
         content: "{{ ssl_certificate }}"
         dest: "{{ project_dir }}/build/nginx/confs/server.crt"
+        owner: vagrant
+        group: vagrant
         mode: '0644'
       no_log: true
 
@@ -59,13 +90,17 @@
       copy:
         content: "{{ ssl_private_key }}"
         dest: "{{ project_dir }}/build/nginx/confs/server.key"
+        owner: vagrant
+        group: vagrant
         mode: '0600'
       no_log: true
     
     - name: Copy nginx configuration files
       template:
-        src: "../templates/{{ item.src }}"
+        src: "../template/{{ item.src }}"
         dest: "{{ project_dir }}/build/nginx/confs/{{ item.dest }}"
+        owner: vagrant
+        group: vagrant
         mode: '0600'
       loop:
         - { src: default.conf.j2, dest: default.conf }
@@ -73,8 +108,10 @@
 
     - name: Copy environment files
       template:
-        src: "../templates/{{ item.src }}"
+        src: "../template/{{ item.src }}"
         dest: "{{ project_dir }}/build/{{ item.dest }}"
+        owner: vagrant
+        group: vagrant
         mode: '0600'
       loop:
         - { src: mysql.env.j2, dest: mysql/.env }
@@ -88,3 +125,5 @@
         state: present
         pull: yes
         remove_orphans: yes
+      become: yes
+      become_method: sudo
