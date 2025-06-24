@@ -5,8 +5,8 @@ server {
 	root /var/www/html;
         index index.php index.html index.htm;
 
-        ssl_certificate {{ PROJECT_DIR }}/build/nginx/confs/server.crt;
-        ssl_certificate_key {{ PROJECT_DIR }}/build/nginx/confs/server.key;
+        ssl_certificate /etc/nginx/conf.d/server.crt;
+        ssl_certificate_key /etc/nginx/conf.d/server.key;
                 
 	location ~ \.php$ {
         	fastcgi_pass {{ WORDPRESS_IPV4 }}:{{ WORDPRESS_PORT }};
