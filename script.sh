@@ -5,6 +5,9 @@ INVENTORY="inventory/hosts.yaml"
 START_PLAYBOOK="playbooks/deploy_site.yaml"
 DOWN_PLAYBOOK="playbooks/teardown_site.yaml"
 
+# Activate the virtual environment to isolate Python dependencies
+source .venv/bin/activate
+
 # Check command line argument to determine action
 if [ "$1" == "start" ]; then
   echo "🚀 Starting deployment..."
