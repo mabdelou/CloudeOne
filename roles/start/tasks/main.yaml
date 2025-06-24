@@ -1,7 +1,7 @@
-- name: Start Docker Compose
+- name: Start Docker Compose  # Launches the Docker Compose services defined in the project directory
   docker_compose:
-    project_src: "{{ PROJECT_DIR }}"
-    state: present
-    pull: yes
-    remove_orphans: yes
-  become: yes
+    project_src: "{{ PROJECT_DIR }}"   # Path to the directory containing the docker-compose.yaml file
+    state: present                     # Ensures services are running (creates and starts containers if needed)
+    pull: yes                          # Pulls the latest images before starting (can be True/False for Compose v1)
+    remove_orphans: yes               # Removes containers for services not defined in the current compose file
+  become: yes                          # Runs the task with elevated privileges (sudo), required for Docker

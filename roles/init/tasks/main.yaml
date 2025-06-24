@@ -1,17 +1,18 @@
-- name: Update apt cache
+- name: Update apt cache  # Updates the local package metadata
   apt:
-    update_cache: yes
-    cache_valid_time: 3600
+    update_cache: yes     # Triggers the apt cache refresh
+    cache_valid_time: 3600  # Skips refreshing if last update was less than an hour ago
 
-- name: Install required packages
+- name: Install required packages  # Installs common tools for automation and development
   apt:
     name:
-      - docker.io
-      - docker-compose
-      - python3-pip
-      - git
-      - vim
-    state: present
+      - docker.io          # Installs Docker engine
+      - docker-compose     # Installs Docker Compose v1 (deprecated, but still available via apt)
+      - python3-pip        # Installs Python package manager
+      - git                # Installs Git for version control
+      - vim                # Installs Vim text editor
+    state: present         # Ensures each package is installed
+
 
 - name: Upgrade pip to the latest version
   command: python3 -m pip install --upgrade pip

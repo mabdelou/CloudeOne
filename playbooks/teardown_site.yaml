@@ -1,7 +1,6 @@
-- hosts: CloudOne
-  become: yes
+- hosts: CloudOne                  # Target the CloudOne host group defined in your inventory
+  become: yes                     # Use privilege escalation (sudo) for all tasks
   vars_files:
-  - ../group_vars/all.yaml
+  - ../group_vars/all.yaml        # Load variables from the specified file (relative path)
   roles:
-    - down
- 
+    - down                        # down Docker Compose or services defined in this final orchestration role

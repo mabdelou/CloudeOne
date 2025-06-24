@@ -1,12 +1,11 @@
-- hosts: CloudOne
-  become: yes
+- hosts: CloudOne                  # Target the CloudOne host group defined in your inventory
+  become: yes                     # Use privilege escalation (sudo) for all tasks
   vars_files:
-  - ../group_vars/all.yaml
+  - ../group_vars/all.yaml        # Load variables from the specified file (relative path)
   roles:
-    - init
-    - wordpress
-    - nginx
-    - mysql
-    - phpmyadmin
-    - start
- 
+    - init                        # Handles system prep (users, packages, maybe firewall)
+    - wordpress                   # Installs and configures the WordPress application
+    - nginx                       # Sets up the NGINX web server
+    - mysql                       # Installs MySQL and sets up the database
+    - phpmyadmin                  # Deploys and configures phpMyAdmin for DB management
+    - start                       # Starts Docker Compose or services defined in this final orchestration role

@@ -1,8 +1,8 @@
-- name: Stop and remove Docker Compose services
+- name: Stop and remove Docker Compose services  # Shuts down and cleans up containers, images, volumes
   docker_compose:
-    project_src: "{{ PROJECT_DIR }}"
-    state: absent
-    remove_images: all
-    remove_orphans: yes
-    remove_volumes: yes
-  become: yes
+    project_src: "{{ PROJECT_DIR }}"             # Path to the project directory with the docker-compose.yaml file
+    state: absent                                # Desired state is absent—stops and removes services
+    remove_images: all                           # Deletes all images defined in the compose project
+    remove_orphans: yes                          # Removes containers not defined in the compose file
+    remove_volumes: yes                          # Deletes associated named and anonymous volumes
+  become: yes                                    # Elevates privileges to run Docker commands

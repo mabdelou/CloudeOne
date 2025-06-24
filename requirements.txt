@@ -1,3 +1,9 @@
+# Main Ansible package - Contains core modules, plugins, and additional collections
 ansible==10.7.0
+
+# Ansible core engine - The base executable and libraries for Ansible functionality
 ansible-core==2.17.12
+
+# Python package for creating isolated Python environments
+# Used in the init.sh script to create a dedicated environment for this project
 virtualenv==20.31.2

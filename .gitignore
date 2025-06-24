@@ -1,7 +1,15 @@
-
+# Exclude any build template files
 # build/ansible/template/*
+
+# Exclude vault files containing sensitive information
 build/ansible/vault/*
+
+# Exclude environment files that might contain secrets
 **.env
+
+# Exclude SSL certificates and keys
 **.crt
 **.key
+
+# Exclude Vagrant-generated files
 .vagrant

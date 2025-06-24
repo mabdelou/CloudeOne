@@ -1,11 +1,11 @@
 # CloudeOne
 
 ## Overview
-
+<!-- Project description and purpose -->
 CloudeOne is an automated WordPress deployment solution using Ansible, Docker, and Vagrant. It creates a fully containerized WordPress environment with Nginx, MySQL, and phpMyAdmin in an isolated virtual machine, making it perfect for development, testing, or production environments.
 
 ## Architecture
-
+<!-- Visual representation of system architecture -->
 ```
 +-------------------------------------------------------+
 |                  Vagrant VM (192.168.56.23)           |
@@ -38,6 +38,7 @@ CloudeOne is an automated WordPress deployment solution using Ansible, Docker, a
 +-------------------+
 ```
 
+<!-- Component description -->
 The environment consists of the following components:
 
 - **Nginx**: Acts as a reverse proxy, handling SSL termination and serving static content
@@ -48,14 +49,14 @@ The environment consists of the following components:
 All components run in Docker containers on a Vagrant-managed virtual machine.
 
 ## Prerequisites
-
+<!-- Required software to run this project -->
 - [Vagrant](https://www.vagrantup.com/downloads) (2.2.x or later)
 - [VirtualBox](https://www.virtualbox.org/wiki/Downloads) (6.1.x or later)
 - [Python](https://www.python.org/downloads/) (3.8.x or later)
 - [Ansible](https://docs.ansible.com/ansible/latest/installation_guide/intro_installation.html) (2.17.x or later)
 
 ## Quick Start
-
+<!-- Step-by-step installation instructions -->
 1. Clone this repository:
 
    ```bash
@@ -86,7 +87,7 @@ All components run in Docker containers on a Vagrant-managed virtual machine.
    - WordPress: https://192.168.56.23:443
 
 ## Configuration
-
+<!-- How to configure the application -->
 All configuration is stored in encrypted Ansible vault files:
 
 ```bash
@@ -95,7 +96,7 @@ ansible-vault view group_vars/all.yaml
 ```
 
 ### Key Configuration Variables
-
+<!-- Important configuration parameters -->
 - `WORDPRESS_DB_NAME`: WordPress database name
 - `WORDPRESS_DB_USER`: WordPress database username
 - `WORDPRESS_DB_PASSWORD`: WordPress database password
@@ -104,7 +105,7 @@ ansible-vault view group_vars/all.yaml
 - `SUBNET_IP`: Docker network subnet
 
 ## Project Structure
-
+<!-- Directory and file organization -->
 ```
 .
 ├── ansible.cfg           # Ansible configuration
@@ -128,7 +129,7 @@ ansible-vault view group_vars/all.yaml
 ```
 
 ## Usage
-
+<!-- Common usage examples -->
 ### Deploying the Site
 
 ```bash
@@ -161,14 +162,14 @@ vagrant ssh
    ```
 
 ## Security Considerations
-
+<!-- Security features and best practices -->
 - All sensitive configuration is stored in Ansible vault files
 - SSL certificates are automatically generated for HTTPS
 - Containers run with minimal privileges
 - Database passwords are randomly generated
 
 ## Troubleshooting
-
+<!-- Common issues and their solutions -->
 ### Common Issues
 
 1. **Vagrant machine fails to start**
@@ -195,7 +196,7 @@ vagrant ssh
    ```
 
 ## Contributing
-
+<!-- Guidelines for project contributions -->
 1. Fork the repository
 2. Create your feature branch (`git checkout -b feature/amazing-feature`)
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
@@ -203,11 +204,11 @@ vagrant ssh
 5. Open a Pull Request
 
 ## License
-
+<!-- Licensing information -->
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Acknowledgments
-
+<!-- Credit to tools and technologies used -->
 - [Ansible](https://www.ansible.com/)
 - [Docker](https://www.docker.com/)
 - [Vagrant](https://www.vagrantup.com/)
