@@ -1,0 +1,42 @@
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+
+- name: Install required packages
+  apt:
+    name:
+      - docker.io
+      - docker-compose
+      - python3-pip
+      - git
+      - vim
+    state: present
+
+- name: Upgrade pip to the latest version
+  command: python3 -m pip install --upgrade pip
+    
+# - name: add docker group
+#   command: sudo groupadd docker
+
+- name: add user to 'docker' group
+  command: sudo usermod -aG docker $USER
+  
+# - name: activate the changes to groups
+#   command: newgrp docker
+
+- name: Create project directory
+  file:
+    path: "{{ PROJECT_DIR }}"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: '0755'
+  
+- name: Copy Docker Compose file
+  template:
+    src: ../templates/docker-compose.yml.j2
+    dest: "{{ PROJECT_DIR }}/docker-compose.yml"
+    owner: vagrant
+    group: vagrant
+    mode: '0644'

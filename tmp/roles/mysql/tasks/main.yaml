@@ -1,0 +1,14 @@
+- name: Create mysql folder
+  file:
+    path: "{{ PROJECT_DIR }}/build/mysql"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: '0755'
+- name: Copy environment files
+  template:
+    src: "../templates/mysql.env.j2"
+    dest: "{{ PROJECT_DIR }}/build/mysql/.env"
+    owner: vagrant
+    group: vagrant
+    mode: '0600'

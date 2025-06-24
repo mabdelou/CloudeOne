@@ -11,17 +11,16 @@ services:
     container_name: nginx
     hostname: nginx
     ports:
-      - 443:443
+      - {{ NGINX_PORT }}:{{ NGINX_PORT }}
     networks:
       net:
-        ipv4_address: 13.37.24.2
+        ipv4_address: {{ NGINX_IPV4 }}
     volumes:
       - ./build/nginx/confs/default.conf:/etc/nginx/conf.d/default.conf:ro
       - ./build/nginx/confs/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./build/nginx/confs/server.key:/etc/nginx/conf.d/server.key:ro
       - ./build/nginx/confs/server.crt:/etc/nginx/conf.d/server.crt:ro
       - source:/var/www/html:ro
-    env_file: ./build/nginx/.env
     restart: always
 
 
@@ -33,10 +32,10 @@ services:
     container_name: wordpress
     hostname: wordpress
     expose:
-      - "9000"
+      - "{{ WORDPRESS_PORT }}"
     networks:
       net:
-        ipv4_address: 13.37.24.3
+        ipv4_address: {{ WORDPRESS_IPV4 }}
     volumes:
       - source:/var/www/html
     env_file: ./build/wordpress/.env
@@ -51,10 +50,10 @@ services:
     container_name: phpmyadmin
     hostname: phpmyadmin
     expose:
-      - "80"
+      - "{{ PHPMYADMIN_PORT }}"
     networks:
       net:
-        ipv4_address: 13.37.24.4
+        ipv4_address: {{ PHPMYADMIN_IPV4 }}
     env_file: ./build/phpmyadmin/.env
 
 
@@ -64,10 +63,10 @@ services:
     container_name: mysql
     hostname: mysql
     expose:
-      - "3306"
+      - "{{ MYSQL_PORT }}"
     networks:
       net:
-        ipv4_address: 13.37.24.5
+        ipv4_address: {{ MYSQL_IPV4 }}
     volumes:
       - database:/var/lib/mysql
     env_file: ./build/mysql/.env
@@ -82,4 +81,4 @@ networks:
   net:
     ipam:
       config:
-        - subnet: 13.37.24.0/24
+        - subnet: {{ SUBNET_IP }}

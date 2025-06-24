@@ -1,0 +1,41 @@
+- name: Create nginx folder
+  file:
+    path: "{{ PROJECT_DIR }}/build/nginx/confs"
+    state: directory
+    owner: vagrant
+    group: vagrant
+    mode: '0755'
+
+- name: Install SSL certificate
+  copy:
+    content: "{{ SSL_CERTIFICATE }}"
+    dest: "{{ PROJECT_DIR }}/build/nginx/confs/server.crt"
+    owner: vagrant
+    group: vagrant
+    mode: '0644'
+  no_log: true
+
+- name: Install SSL private key
+  copy:
+    content: "{{ SSL_PRIVATE_KEY }}"
+    dest: "{{ PROJECT_DIR }}/build/nginx/confs/server.key"
+    owner: vagrant
+    group: vagrant
+    mode: '0600'
+  no_log: true
+
+- name: Copy nginx configuration file [default.conf]
+  template:
+    src: "../templates/default.conf.j2"
+    dest: "{{ PROJECT_DIR }}/build/nginx/confs/default.conf"
+    owner: vagrant
+    group: vagrant
+    mode: '0600'
+
+- name: Copy nginx configuration file [nginx.conf]
+  template:
+    src: "../files/nginx.conf"
+    dest: "{{ PROJECT_DIR }}/build/nginx/confs/nginx.conf"
+    owner: vagrant
+    group: vagrant
+    mode: '0600'

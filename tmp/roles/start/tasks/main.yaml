@@ -1,0 +1,7 @@
+- name: Start Docker Compose
+  docker_compose:
+    project_src: "{{ PROJECT_DIR }}"
+    state: present
+    pull: yes
+    remove_orphans: yes
+  become: yes

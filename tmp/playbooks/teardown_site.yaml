@@ -1,0 +1,7 @@
+- hosts: CloudOne
+  become: yes
+  vars_files:
+  - ../group_vars/all.yaml
+  roles:
+    - down
+ 

@@ -1,0 +1,8 @@
+- name: Stop and remove Docker Compose services
+  docker_compose:
+    project_src: "{{ PROJECT_DIR }}"
+    state: absent
+    remove_images: all
+    remove_orphans: yes
+    remove_volumes: yes
+  become: yes
