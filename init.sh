@@ -5,6 +5,22 @@ REMOTE_HOST="192.168.56.23"
 REMOTE_PORT=22
 SSH_KEY="$HOME/.ssh/CloudOneKey"
 
+# Create Python virtual environment in .venv/
+if [ ! -d ".venv" ]; then
+  echo "🔧 Creating virtual environment..."
+  virtualenv .venv
+else
+  echo "✅ Virtual environment already exists"
+fi
+
+# Activate the virtual environment
+source .venv/bin/activate
+echo "🐍 Virtualenv activated: $(which python)"
+
+# Start Vagrant
+echo "🚀 Starting Vagrant..."
+vagrant up
+
 # Step 1: Generate SSH key if not already present
 if [ ! -f "$SSH_KEY" ]; then
   echo "🔐 Generating SSH key..."
